@@ -16,8 +16,9 @@ reference::~reference() {
 void reference::generate() {
 	int dna;
 	srand((unsigned)time(NULL));
+	int n = length / 4;
 
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < n; i++) {
 		dna = rand() % 4;
 
 		switch (dna) {
@@ -32,6 +33,66 @@ void reference::generate() {
 			break;
 		case 3:
 			fout << "C";
+			break;
+		default:
+			i--;
+			break;
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		dna = rand() % 4;
+		switch (dna) {
+		case 0:
+			fout << "T";
+			break;
+		case 1:
+			fout << "G";
+			break;
+		case 2:
+			fout << "C";
+			break;
+		case 3:
+			fout << "A";
+			break;
+		default:
+			i--;
+			break;
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		dna = rand() % 4;
+		switch (dna) {
+		case 0:
+			fout << "G";
+			break;
+		case 1:
+			fout << "C";
+			break;
+		case 2:
+			fout << "A";
+			break;
+		case 3:
+			fout << "T";
+			break;
+		default:
+			i--;
+			break;
+		}
+	}
+	for (int i = 0; i < n; i++) {
+		dna = rand() % 4;
+		switch (dna) {
+		case 0:
+			fout << "A";
+			break;
+		case 1:
+			fout << "C";
+			break;
+		case 2:
+			fout << "T";
+			break;
+		case 3:
+			fout << "G";
 			break;
 		default:
 			i--;

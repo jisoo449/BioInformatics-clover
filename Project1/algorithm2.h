@@ -9,8 +9,6 @@ class algorithm2 {
 	int n, k, d; //n:shortread개수, k:shortread길이, d:허용하는 mismatch 개수
 	string shortread, mydna, reference;
 	int x = 2;
-	int *idx;
-	char **loc;
 
 public:
 	algorithm2(int k, int n, string reference = "reference.txt", string shortread = "shortread.txt", string mydna = "mydna.txt");

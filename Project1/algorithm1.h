@@ -1,8 +1,6 @@
 #pragma once
 #ifndef _ALGORITHM1_H
 #define _ALGORITHM1_H
-#include<iostream>
-#include<string>
 using namespace std;
 
 template<typename T>

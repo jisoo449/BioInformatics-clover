@@ -67,7 +67,7 @@ int main(){
 
 	BSTree<string> bst;
 	ifstream shortread;
-	shortread.open("shortread.txt");
+	shortread.open("shortreadFn.txt");
 	cout << "shortread 개수 ?";
 	int shortnum;
 	cin >> shortnum;

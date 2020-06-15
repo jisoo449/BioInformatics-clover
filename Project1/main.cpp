@@ -37,10 +37,9 @@ vector<int> kmp(string s, string p){
 		}
 	}
 	return ans; 
-} */
+} 
 
-int main(){ 
-	string s, p;
+int main(){	string s, p;
 	clock_t start, end;
 	getline(cin, s); 
 	getline(cin, p); 
@@ -58,6 +57,10 @@ int main(){
 	for(auto i : matched) printf("%d ", i+1);
 	cout <<endl<< end - start << endl << endl;
 
+}
+*/
+
+int main(){ 
 
 	return 0; 
 }

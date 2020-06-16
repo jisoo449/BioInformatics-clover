@@ -17,7 +17,7 @@ int main() {
 	int l = 70;//shortread 길이
 	int m = 200000000;//shortread 개수
 	int d=4;//mismatch 개수
-	string shname = "shortread.txt", refname = "reference.txt";
+	string shname = "shortread.txt", refname = "reference.txt", mydna="mydna.txt",realdna="real.txt";
 
 	reference ref(n, refname);
 
@@ -70,5 +70,6 @@ int main() {
 	//algoritm2
 	//algorithm2 al2(l,m,d);
 	//al2.reconstruct();
+	//al2.compare();
 	return 0;
 }

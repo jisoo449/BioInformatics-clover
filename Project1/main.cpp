@@ -65,6 +65,10 @@ int main(){	string s, p;
 
 int main(){ 
 
+	shortread shortread(70, 100001000);
+	shortread.makeShortread();
+
+	/*
 	BSTree<string> bst;
 	ifstream shortread;
 	shortread.open("shortreadFn.txt");
@@ -98,7 +102,11 @@ int main(){
 	string myDNA = bst.remake();
 	ofstream myDNAfile;
 	myDNAfile.open("myDNA_by_denovo.txt");
-	myDNAfile.write(myDNA.c_str(), myDNA.size());//
+	myDNAfile.write(myDNA.c_str(), myDNA.size());*/
 
+
+	//algoritm2
+	algorithm2 al2(70, 100001000);// string reference = "reference.txt", string shortread = "shortread.txt", "mydna.txt");
+	al2.reconstruct();
 	return 0; 
 }

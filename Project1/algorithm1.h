@@ -1,6 +1,6 @@
-//#pragma once
-//#ifndef _ALGORITHM1_H
-//#define _ALGORITHM1_H
+#pragma once
+#ifndef _ALGORITHM1_H
+#define _ALGORITHM1_H
 using namespace std;
 template<typename T> class BSTree;
 
@@ -57,4 +57,4 @@ public:
 	string myDNAleft;
 	string myDNAright;
 };
-//#endif // !_ALGORITHM1_H
+#endif // !_ALGORITHM1_H

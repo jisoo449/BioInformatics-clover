@@ -95,7 +95,7 @@ void BSTree<T>::insertrightSub(Node<T> *&p, const string &newElement) {
 
 template<typename T>
 string BSTree<T>::remake() {
-	string left = remakeSubleft(root);
+	string left= remakeSubleft(root);
 	string right = remakeSubright(root->right);
 	return left + right;
 }
@@ -118,7 +118,7 @@ string BSTree<T>::remakeSubright(Node<T>*p) {
 	if (p->right != nullptr) {
 		string tempshort = p->data.substr(p->num);
 		myDNAright = myDNAright + tempshort;
-		remakeSubright(p->right);
+		remakeSubright(p -> right);
 	}
 	else if (p->right == nullptr) {
 		string tempshort = p->data.substr(p->num);

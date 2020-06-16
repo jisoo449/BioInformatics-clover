@@ -1,6 +1,8 @@
 #include<string>
 #include<fstream>
 #include<vector>
+#include<queue>
+#include<set>
 #include"algorithm2.h"
 
 
@@ -8,9 +10,9 @@ algorithm2::algorithm2(int k, int n, string reference, string shortread, string 
 	this->n = n;
 	this->k = k;
 
-	idx = new int[n];
-	loc = new char*[n];
-	for (int i = 0; i < n; i++)loc[i] = new char[k + 1];
+	//idx = new int[n];
+	//loc = new char*[n];
+	//for (int i = 0; i < n; i++)loc[i] = new char[k + 1];
 }
 
 void algorithm2::computeSP(char* str, int* sp, int size) {
@@ -37,23 +39,45 @@ void algorithm2::reconstruct() {
 	//1. 일치하는 부분 찾기
 	while (fin1.getline(str1, k)) {
 		int j = -1;
+		int i;
 		int t = 0;
 		int mismatch = 0;//다른 문자의 개수
 
+		queue<int> sparr;
+		queue<int> iarr;
+		int tmp;
+		int p = 0;//0:while 안거침 , 1: while 거침
+
 		computeSP(str1, sp, tablesize);//sp 테이블 생성
 
+		//문자열 비교
 		while (fin2.get(str2, k)) {
-			for (int i = 0; i < k; i++) {
-				//kmp알고리즘 이용하여 특정 부분 중 mismatch이하로 일치하는지 찾아보기
-				if (mismatch <= d) {
+
+			for (i = 0; i < k; i++) {
+
+				//sp 테이블로 일치하지 않는 문자들의 위치 저장
+				while (j >= 0 && str1[j + 1] != str2[i]) tmp = sp[j];
+				if (p == 1) {
+					sparr.push(tmp);
+					iarr.push(i);
+				}
+				
+				if (mismatch > d) {
+					j = sparr.front();
+					i = iarr.front();
+					sparr.pop();
+					iarr.pop();
+					mismatch = 0;
+				}
+
+				//한계 이하로 mismatch 발생 시 패턴 비교
+				else {
 					if (str1[j + 1] != str2[i])mismatch++;
 					j++;
+					p = 0;
 				}
-				else {
-					mismatch = 0;
-					while (j >= 0 && str1[j + 1] != str2[i]) j = sp[j];
-				}
-				//일치한다면 제대로 비교
+
+				//패턴이 존재한다면 제대로 비교
 				if (j == tablesize - 1) {
 					//전체 문자열 가져와서 비교하기(인덱스j부터)
 					for (int i = j; i < k; i++) {
@@ -76,6 +100,7 @@ void algorithm2::reconstruct() {
 	}
 
 	//2. 합치기
+
 
 	fin1.close();
 	fin2.close();

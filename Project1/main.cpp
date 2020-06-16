@@ -4,6 +4,7 @@
 #include <cstdio> 
 #include <vector> 
 #include<ctime>
+#include<time.h>
 #include<fstream>
 #include"trivial.h"
 #include"algorithm1.h"

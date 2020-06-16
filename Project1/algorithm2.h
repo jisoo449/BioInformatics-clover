@@ -10,16 +10,16 @@ class algorithm2 {
 	ofstream fout;//fout:mydna
 	ifstream fin1, fin2;//fin1:shortread, fin2: reference 
 	int n, k, d; //n:shortread개수, k:shortread길이, d:허용하는 mismatch 개수
-	string shortread, mydna, reference;
+	string shortread, mydna, reference,real;
 	int x = 2;
 	sh* idxtable;
 
-	int accuracy;
+	double accuracy;
 	float time;
-
+	clock_t start;
 
 public:
-	algorithm2(int k, int n, string reference = "reference.txt", string shortread = "shortread.txt", string mydna = "mydna.txt");
+	algorithm2( int k, int n, int d, string real="real.txt",string reference = "reference.txt", string shortread = "shortread.txt", string mydna = "mydna.txt");
 	void reconstruct();
 	void compare();
 	void computeSP(char* str, int* sp, int size);

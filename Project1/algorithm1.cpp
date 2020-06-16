@@ -17,20 +17,20 @@ bool BSTree<T>::empty() {
 }
 
 template<typename T>
-void BSTree<T>::insertleft(const T &newElement) {
+void BSTree<T>::insertleft(const string &newElement) {
 	if (empty()) {
-		root = new Node(newElement, 0);
+		root = new Node<string>(newElement, 0);
 	}
 	else
 		return insertleftSub(root, newElement);
 }
 
 template<typename T>
-void BSTree<T>::insertright(const T &newElement) {
+void BSTree<T>::insertright(const string &newElement) {
 	return insertrightSub(root, newElement);
 }
 template<typename T>
-void BSTree<T>::insertleftSub(Node<T> *&p, const T &newElement) {
+void BSTree<T>::insertleftSub(Node<T> *&p, const string &newElement) {
 	if (p->left != NULL) { //왼쪽 자식이 비어있지 않으면 계속 넘어가기
 		p = p->left;
 		insertleftSub(p, newElement);
@@ -43,7 +43,7 @@ void BSTree<T>::insertleftSub(Node<T> *&p, const T &newElement) {
 		for (int i = 0; i < endP; i++) { //newElement 비교 시작 인덱스
 			for (int j = 0; j < tempLen; j++) {
 				if (i + j == newElement.length()) {
-					p->left = Node(newElement, i); //0부터 i-1번째까지 앞에 추가됨
+					p->left = new Node<string>(newElement, i); //0부터 i-1번째까지 앞에 추가됨
 					leftsuccess = true;
 					insertEnd = true;
 					break;
@@ -62,7 +62,7 @@ void BSTree<T>::insertleftSub(Node<T> *&p, const T &newElement) {
 }
 
 template<typename T>
-void BSTree<T>::insertrightSub(Node<T> *&p, const T &newElement) {
+void BSTree<T>::insertrightSub(Node<T> *&p, const string &newElement) {
 	if (p->right != NULL) {
 		p = p->right;
 		insertrightSub(p, newElement);
@@ -75,7 +75,7 @@ void BSTree<T>::insertrightSub(Node<T> *&p, const T &newElement) {
 		for (int i = 0; i < startP; i++) { //p비교 시작 인덱스
 			for (int j = 0; j < newElement.length(); j++) { //새 원소 비교 시작 인덱스
 				if (i + j == newElement.length()) {
-					p->right = Node(newElement, j); //j부터 newElement 길이까지 뒤에 추가됨
+					p->right = new Node<string>(newElement, j); //j부터 newElement 길이까지 뒤에 추가됨
 					rightsuccess = true;
 					insertEnd = true;
 					break;

@@ -20,7 +20,7 @@ int main() {
 	string shname = "shortread.txt", refname = "reference.txt", mydna="mydna.txt",realdna="real.txt";
 
 	reference ref(n, refname);
-
+	ref.generate();
 	shortread shortread(n, d,l,m,shname,refname,realdna);
 	shortread.makeShortread();
 
@@ -65,7 +65,7 @@ int main() {
 	cout <<"\nresult"<< myDNA << endl;
 	fout.open("myDNA_by_denovo.txt");
 	fout.write(myDNA.c_str(), myDNA.size());
-	return 0;*/
+	*/
 
 	//algoritm2
 	//algorithm2 al2(l,m,d);

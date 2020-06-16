@@ -13,8 +13,15 @@
 using namespace std;
 
 int main() {
+	int n=2000000000;//dna 길이
+	int l = 70;//shortread 길이
+	int m = 200000000;//shortread 개수
+	int d=4;//mismatch 개수
+	string shname = "shortread.txt", refname = "reference.txt";
 
-	shortread shortread(70, 100001000);
+	reference ref(n, refname);
+
+	shortread shortread(n, d,l,m,shname,refname);
 	shortread.makeShortread();
 
 	/*BSTree<string> bst;

@@ -5,19 +5,13 @@
 #include<fstream>
 #include"reference.h"
 
-reference::reference(string name) :fn(name) {
-	fout.open(fn);
-}
-
-reference::~reference() {
-	fout.close();
-}
-
+reference::reference(int length, string name) :length(length), fn(name) {}
 void reference::generate() {
 	int dna;
 	srand((unsigned)time(NULL));
 	int n = length / 4;
 
+	fout.open(fn);
 	for (int i = 0; i < n; i++) {
 		dna = rand() % 4;
 
@@ -39,66 +33,7 @@ void reference::generate() {
 			break;
 		}
 	}
-	for (int i = 0; i < n; i++) {
-		dna = rand() % 4;
-		switch (dna) {
-		case 0:
-			fout << "T";
-			break;
-		case 1:
-			fout << "G";
-			break;
-		case 2:
-			fout << "C";
-			break;
-		case 3:
-			fout << "A";
-			break;
-		default:
-			i--;
-			break;
-		}
-	}
-	for (int i = 0; i < n; i++) {
-		dna = rand() % 4;
-		switch (dna) {
-		case 0:
-			fout << "G";
-			break;
-		case 1:
-			fout << "C";
-			break;
-		case 2:
-			fout << "A";
-			break;
-		case 3:
-			fout << "T";
-			break;
-		default:
-			i--;
-			break;
-		}
-	}
-	for (int i = 0; i < n; i++) {
-		dna = rand() % 4;
-		switch (dna) {
-		case 0:
-			fout << "A";
-			break;
-		case 1:
-			fout << "C";
-			break;
-		case 2:
-			fout << "T";
-			break;
-		case 3:
-			fout << "G";
-			break;
-		default:
-			i--;
-			break;
-		}
-	}
+	fout.close();
 }
 
 string reference::Filename() {

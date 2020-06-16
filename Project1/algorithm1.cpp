@@ -95,13 +95,17 @@ void BSTree<T>::insertrightSub(Node<T> *&p, const string &newElement) {
 
 template<typename T>
 string BSTree<T>::remake() {
-	string left= remakeSubleft(root);
+	string left = remakeSubleft(root);
 	string right = remakeSubright(root->right);
 	return left + right;
 }
 
 template<typename T>
 string BSTree<T>::remakeSubleft(Node<T>*p) {
+	if (p == nullptr) {
+		cout << "nothing on leftside" << endl;
+		return myDNAleft;
+	}
 	if (p->left != nullptr) {
 		remakeSubleft(p->left);
 		int tempnum = p->num;
@@ -111,19 +115,25 @@ string BSTree<T>::remakeSubleft(Node<T>*p) {
 	if (p->left == nullptr) //가장 왼쪽 끝의 노드값 더하기
 		myDNAleft = p->data;
 
+	cout << "myDNAleft" << myDNAleft << endl;
 	return myDNAleft;
 }
 template<typename T>
 string BSTree<T>::remakeSubright(Node<T>*p) {
+	if (p == nullptr) {
+		cout << "nothing on right side" << endl;
+		return myDNAright;
+	}
 	if (p->right != nullptr) {
 		string tempshort = p->data.substr(p->num);
 		myDNAright = myDNAright + tempshort;
-		remakeSubright(p -> right);
+		remakeSubright(p->right);
 	}
 	else if (p->right == nullptr) {
 		string tempshort = p->data.substr(p->num);
 		myDNAright = myDNAright + tempshort;
 	}
 
+	cout << "myDNAright" << myDNAright << endl;
 	return myDNAright;
 }

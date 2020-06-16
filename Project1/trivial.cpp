@@ -1,54 +1,68 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<ctime>
+#include<cstdio>
 #include<iostream>
 #include<istream>
 #include<fstream>
 #include "trivial.h"
 
-trivial::trivial(int k, int n, string reference, string shortread, string mydna) :reference(reference), shortread(shortread), mydna(mydna) {
+trivial::trivial(int k, int n, int d, string real, string reference, string shortread, string mydna) :reference(reference), shortread(shortread), mydna(mydna) {
 	this->n = n;
 	this->k = k;
-
-	idx = new int[n];
-	loc = new char*[n];
-	for (int i = 0; i < n; i++)loc[i] = new char[k + 1];
+	this->d = d;
+	this->real = real;
 }
 
 void trivial::reconstruct() {
+	start = clock();
 
 	fout.open(mydna);
 	fin1.open(shortread);
 	fin2.open(reference);
 
-	char * str1 = new char[k], *str2 = new char[k];//str1:shortread를 저장, str2:reference를 저장
-
+	char *str1 = new char[k], *str2 = new char[k];
+	int idx=0,mismatch=0,i;
 	while (fin1.getline(str1, k)) {
-		int i = 0;
-		int t = 0;
-		int n = 0;//다른 문자의 개수
+
 		while (fin2.getline(str2, k)) {
-
-			for (int j = 0; j < k; j++) {
-				if (str1[j] != str2[j]) n++;
-				if (n > 2) break;
+			for (i = 0; i < k; i++) {
+				if (str1[i] != str2[i])mismatch++;
+				if (mismatch > d)break;
 			}
-			if (n == 2 || n == 0) {
-				idx[t] = i;
-				strcpy(loc[t++], str1);
+			if (i < k) {
+				fin2.seekg(++idx, ios::beg);
 			}
-
-			fin2.seekg(++i, ios::beg);
+			else {
+				break;
+			}
 		}
+		fout.seekp(idx, ios::beg);
+		fout << str1;
+		idx=0;
 	}
 
-	for (int i = 0; i < n; i++) {
-
-	}
-
+	fin1.close();
+	fin2.close();
 	fout.close();
 
+	time = (float)(clock() - start) / CLOCKS_PER_SEC;
 }
 
 void trivial::compare() {
+	int correct = 0;
+	char c1, c2;
+	fin1.open(real);
+	fin2.open(mydna);
 
+	do {
+		fin1.get(c1);
+		fin2.get(c2);
+		if (c1 == c2)correct++;
+	} while (!fin1.eof());
 
+	fin1.seekg(0, ios::beg);
+	accuracy = (correct / fin1.tellg()) * 100;
 
+	cout << "걸린 시간: " << time << endl;
+	cout << "정확도: " << accuracy << "%" << endl;
 }

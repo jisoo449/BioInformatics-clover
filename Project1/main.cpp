@@ -24,6 +24,11 @@ int main() {
 	shortread shortread(n, d,l,m,shname,refname,realdna);
 	shortread.makeShortread();
 
+	//trivial
+	/*trivial tri(l,m,d);
+	tri.reconstruct();
+	tri.compare();*/
+
 	/*BSTree<string> bst;
 	ifstream fin;
 	fin.open("shortread.txt");
@@ -68,8 +73,8 @@ int main() {
 	*/
 
 	//algoritm2
-	//algorithm2 al2(l,m,d);
-	//al2.reconstruct();
-	//al2.compare();
+	/*algorithm2 al2(l,m,d);
+	al2.reconstruct();
+	al2.compare();*/
 	return 0;
 }

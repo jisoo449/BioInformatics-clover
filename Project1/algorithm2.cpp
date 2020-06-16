@@ -2,16 +2,15 @@
 #include<fstream>
 #include<vector>
 #include<queue>
+#include<cstdio>
+#include<ctime>
 #include"algorithm2.h"
+#include<iostream>
 
-
-algorithm2::algorithm2(int k, int n, string reference, string shortread, string mydna) :reference(reference), shortread(shortread), mydna(mydna) {
+algorithm2::algorithm2(int k, int n, int d, string real,string reference, string shortread, string mydna) :reference(reference), shortread(shortread), mydna(mydna),real(real) {
 	this->n = n;
 	this->k = k;
-
-	//idx = new int[n];
-	//loc = new char*[n];
-	//for (int i = 0; i < n; i++)loc[i] = new char[k + 1];
+	this->d = d;
 }
 
 void algorithm2::computeSP(char* str, int* sp, int size) {
@@ -25,6 +24,8 @@ void algorithm2::computeSP(char* str, int* sp, int size) {
 }
 
 void algorithm2::reconstruct() {
+
+	start = clock();
 
 	fout.open(mydna);
 	fin1.open(shortread);
@@ -102,6 +103,9 @@ void algorithm2::reconstruct() {
 		x++;
 	}
 
+	fin1.close();
+	fin2.close();
+
 	//2. 합치기
 	int j, vecidx = 0;
 	fout.open(mydna);
@@ -129,11 +133,28 @@ void algorithm2::reconstruct() {
 	}
 
 	fin1.close();
-	fin2.close();
+	fout.close();
+
+	time = (float)(clock() - start) / CLOCKS_PER_SEC;
 
 }
 
 void algorithm2::compare() {
+	int correct=0;
+	char c1, c2;
+	fin1.open(real);
+	fin2.open(mydna);
+
+	do {
+		fin1.get(c1);
+		fin2.get(c2);
+		if (c1 == c2)correct++;
+	} while (!fin1.eof());
+
+	fin1.seekg(0, ios::beg);
+	accuracy = (correct / fin1.tellg()) * 100;
 	
+	cout << "걸린 시간: " << time<<endl;
+	cout << "정확도: " << accuracy << "%" << endl;
 
 }

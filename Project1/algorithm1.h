@@ -39,13 +39,12 @@ public:
 	BSTree<T>();
 	~BSTree<T>();
 
-	void insertleft(const string &newElement);
-	void insertright(const string &newElement);
+	void insert(const string &newElement);
 	bool empty();
 
 	string remake();
 
-	void insertleftSub(Node<T> *&p, const string &newElement);
+	void insertSub(Node<T> *&p, const string &newElement);
 	void insertrightSub(Node<T> *&p, const string &newElement);
 	string remakeSubleft(Node<T> *p);
 	string remakeSubright(Node<T> *p);

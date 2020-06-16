@@ -68,7 +68,7 @@ int main() {
 	return 0;*/
 
 	//algoritm2
-	algorithm2 al2(70, 100001000);// string reference = "reference.txt", string shortread = "shortread.txt", "mydna.txt");
-	al2.reconstruct();
+	//algorithm2 al2(l,m,d);
+	//al2.reconstruct();
 	return 0;
 }

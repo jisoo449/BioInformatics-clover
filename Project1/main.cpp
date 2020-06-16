@@ -78,7 +78,7 @@ int main() {
 	fout.write(myDNA.c_str(), myDNA.size());
 	end = clock();
 	result = (double)(end - start) / (CLOCKS_PER_SEC);
-	cout << "걸린 시간 : " << result << "초" << endl;
+	cout << "걸린 시간 : " << result << endl;
 	return 0;
 	*/
 

@@ -65,4 +65,7 @@ void trivial::compare() {
 
 	cout << "걸린 시간: " << time << endl;
 	cout << "정확도: " << accuracy << "%" << endl;
+
+	fin1.close();
+	fin2.close();
 }

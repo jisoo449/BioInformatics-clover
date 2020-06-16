@@ -25,7 +25,7 @@ int main() {
 	shortread.makeShortread();
 
 	//trivial
-	/*trivial tri(l,m,d);
+	/*trivial tri(l,m,d,realdna,refname,shname,"trivial.txt");
 	tri.reconstruct();
 	tri.compare();*/
 
@@ -73,7 +73,7 @@ int main() {
 	*/
 
 	//algoritm2
-	/*algorithm2 al2(l,m,d);
+	/*algorithm2 al2(l,m,d,realdna,refname,shname,"al2.txt");
 	al2.reconstruct();
 	al2.compare();*/
 	return 0;

@@ -21,7 +21,7 @@ int main() {
 
 	reference ref(n, refname);
 
-	shortread shortread(n, d,l,m,shname,refname);
+	shortread shortread(n, d,l,m,shname,refname,realdna);
 	shortread.makeShortread();
 
 	/*BSTree<string> bst;

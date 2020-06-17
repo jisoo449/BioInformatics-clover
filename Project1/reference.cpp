@@ -9,10 +9,9 @@ reference::reference(int length, string name) :length(length), fn(name) {}
 void reference::generate() {
 	int dna;
 	srand((unsigned)time(NULL));
-	int n = length / 4;
 
 	fout.open(fn);
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < length; i++) {
 		dna = rand() % 4;
 
 		switch (dna) {

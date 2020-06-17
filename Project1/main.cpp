@@ -30,17 +30,21 @@ int main() {
 	tri.reconstruct();
 	tri.compare();*/
 
+	//de novo 방식 main
 	/*
 	BSTree<string> bst;
 	ifstream fin;
 	fin.open("shortread.txt");
-	cout << "shortread 개수 ?";
+	cout << "shortread 개수 ? ";
 	int shortnum;
 	cin >> shortnum;
 	bool leftsuccess;
 	bool rightsuccess;
 	clock_t start, end;
 	double result;
+	cout << "일치할 최소 길이 ? "; //최소 매칭 개수 받기
+	int oknum;
+	cin >> oknum;
 
 	start = clock();
 	string *arr = new string[shortnum];
@@ -53,16 +57,18 @@ int main() {
 			i++;
 			continue;
 		}
-		bst.insert(arr[i]);
+		bst.insert(arr[i], oknum);
 		leftsuccess = bst.getleftsuccess();
 		rightsuccess = bst.getrightsuccess();
 		if (leftsuccess == true) {
 			cout << "왼쪽 삽입 성공" << endl;
+			arr[i] = "NULL";
 			i = 0;
 			continue;
 		}
 		else if (leftsuccess == false && rightsuccess == true) {
 			cout << "오른쪽 삽입 성공" << endl;
+			arr[i] = "NULL";
 			i = 0;
 			continue;
 		}

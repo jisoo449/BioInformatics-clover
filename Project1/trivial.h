@@ -6,7 +6,7 @@ using namespace std;
 class trivial {
 	ofstream fout;
 	ifstream fin1, fin2;
-	int n, k, d; //n:°³¼ö, k:±æÀÌ, d:shortread °³¼ö
+	int n, k, d; //n:ê°œìˆ˜, k:ê¸¸ì´, d:shortread ê°œìˆ˜
 	string shortread, mydna, reference, real;
 	int x = 2;
 	float time;

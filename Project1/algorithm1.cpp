@@ -1,4 +1,4 @@
-#include"algorithm2.h"
+#include"algorithm1.h"
 template<typename T>
 BSTree<T>::BSTree() {
 	root = nullptr;

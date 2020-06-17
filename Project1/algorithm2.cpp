@@ -13,13 +13,20 @@ algorithm2::algorithm2(int k, int n, int d, string real,string reference, string
 	this->d = d;
 }
 
-void algorithm2::computeSP(char* str, int* sp, int size) {
+void algorithm2::computeSP(string str, int* sp, int size) {
 	int K = -1;
 	sp[0] = -1;
-	for (int i = 0; i < size; i++) {
-		while (K >= 0 && str[K + 1] != str[i])K = sp[K];
-		if (str[K + 1] == str[i])K++;
-		sp[i] = K;
+	for (int i = 1; i <= size-1; i++) {
+		while (K > 0 && str[K + 1] != str[i]) {
+			K = sp[K - 1];
+		}
+		if (str[K+1] == str[i]) {
+			K++;
+			sp[i] = K;
+		}
+		else {
+			sp[i] = 0;
+		}
 	}
 }
 
@@ -30,35 +37,47 @@ void algorithm2::reconstruct() {
 	fout.open(mydna);
 	fin1.open(shortread);
 	fin2.open(reference);
-
-	char * str1 = new char[k], *str2 = new char[k];//str1:shortread¸¦ ÀúÀå, str2:reference¸¦ ÀúÀå
-	int tablesize = k / 3;
+	
+	string str1; char *str2 = new char[k];//str1:shortreadë¥¼ ì €ì¥, str2:referenceë¥¼ ì €ì¥
+	int tablesize = k / 3+1;
 	int *sp = new int[tablesize];
 	int idx=0;
 
-	//1. ÀÏÄ¡ÇÏ´Â ºÎºĞ Ã£±â
-	while (fin1.getline(str1, k)) {
+	// referenceí¬ê¸°
+	fin1.seekg(0, ios::end);
+	int size = fin1.tellg();
+	fin1.clear();
+	fin1.seekg(0, ios::beg);
+
+	//1. ì¼ì¹˜í•˜ëŠ” ë¶€ë¶„ ì°¾ê¸°
+	while (getline(fin1, str1)) {
 		int j = -1;
 		int i;
 		int t = 0;
-		int mismatch = 0;//´Ù¸¥ ¹®ÀÚÀÇ °³¼ö
+		int mismatch = 0;//ë‹¤ë¥¸ ë¬¸ìì˜ ê°œìˆ˜
+		idx = 0;
+		computeSP(str1, sp, tablesize);//sp í…Œì´ë¸” ìƒì„±
 
-		computeSP(str1, sp, tablesize);//sp Å×ÀÌºí »ı¼º
-
-		//¹®ÀÚ¿­ ºñ±³
-		while (fin2.get(str2, k)) {
+		//ë¬¸ìì—´ ë¹„êµ
+		while(idx<size-k) {
 			queue<int> sparr;
 			queue<int> iarr;
 			int tmp;
-			int p = 0;//0:while ¾È°ÅÄ§ , 1: while °ÅÄ§
+			int p = 0;//0:while ì•ˆê±°ì¹¨ , 1: while ê±°ì¹¨
 
+			fin2.get(str2, k);
 			for (i = 0; i < k; i++) {
 
-				//sp Å×ÀÌºí·Î ÀÏÄ¡ÇÏÁö ¾Ê´Â ¹®ÀÚµéÀÇ À§Ä¡ ÀúÀå
-				while (j >= 0 && str1[j + 1] != str2[i]) tmp = sp[j];
+				//sp í…Œì´ë¸”ë¡œ ì¼ì¹˜í•˜ì§€ ì•ŠëŠ” ë¬¸ìë“¤ì˜ ìœ„ì¹˜ ì €ì¥
+				tmp = j;
+				while (tmp > 0 && str1[tmp + 1] != str2[i]) {
+					tmp = sp[tmp];
+					p = 1;
+				}
 				if (p == 1) {
 					sparr.push(tmp);
 					iarr.push(i);
+					p = 0;
 				}
 				
 				if (mismatch > d) {
@@ -69,34 +88,35 @@ void algorithm2::reconstruct() {
 					mismatch = 0;
 				}
 
-				//ÇÑ°è ÀÌÇÏ·Î mismatch ¹ß»ı ½Ã ÆĞÅÏ ºñ±³
+				//í•œê³„ ì´í•˜ë¡œ mismatch ë°œìƒ ì‹œ íŒ¨í„´ ë¹„êµ
 				else {
 					if (str1[j + 1] != str2[i])mismatch++;
 					j++;
-					p = 0;
 				}
 
-				//ÆĞÅÏÀÌ Á¸ÀçÇÑ´Ù¸é Á¦´ë·Î ºñ±³
+				//íŒ¨í„´ì´ ì¡´ì¬í•œë‹¤ë©´ ì œëŒ€ë¡œ ë¹„êµ
 				if (j == tablesize - 1) {
-					//ÀüÃ¼ ¹®ÀÚ¿­ °¡Á®¿Í¼­ ºñ±³ÇÏ±â(ÀÎµ¦½ºjºÎÅÍ)
+					//ì „ì²´ ë¬¸ìì—´ ê°€ì ¸ì™€ì„œ ë¹„êµí•˜ê¸°(ì¸ë±ìŠ¤jë¶€í„°)
 					for (int i = j; i < k; i++) {
 						if (str1[i] != str2[i])mismatch++;
 						if (mismatch > d)break;
 					}
-					//´ÙÀ½ ¹®ÀÚ¿­ ÀÎµ¦½º ÀúÀå
+					//ë‹¤ìŒ ë¬¸ìì—´ ì¸ë±ìŠ¤ ì €ì¥
 					if (mismatch <= d) {
 						mismatch = 0;
 						idxtable[x].index.push_back(idx + i - j);
 					}
 				}
-				//¹®ÀÚ¿­ÀÌ ³¡³µ´Ù¸é ´ÙÀ½À¸·Î º¸³¿
+
+				//ë¬¸ìì—´ì´ ëë‚¬ë‹¤ë©´ ë‹¤ìŒìœ¼ë¡œ ë³´ëƒ„
 				if (i == k - 1) {
 					idx = idx + i - j;
 				}
 			}
 
-			//´ÙÀ½ ¹®ÀÚ¿­ ºñ±³
+			//ë‹¤ìŒ ë¬¸ìì—´ ë¹„êµ
 			mismatch = 0;
+			fin2.clear();
 			fin2.seekg(idx, ios::beg);
 		}
 		memset(sp, NULL, k);
@@ -106,20 +126,22 @@ void algorithm2::reconstruct() {
 	fin1.close();
 	fin2.close();
 
-	//2. ÇÕÄ¡±â
+	//2. í•©ì¹˜ê¸°
 	int j, vecidx = 0;
+	char *s = new char[k];
 	fout.open(mydna);
 	fout.seekp(idxtable[0].index[0], ios::beg);
 	fout << idxtable[0].sh;
 	idxtable[0].index.erase(idxtable[0].index.begin());
-	fin1.open(mydna);
 	for (int i = 1; i < n; i++) {
 		fout.seekp(idxtable[i].index[vecidx], ios::beg);
+		fout << idxtable[i].sh;
+		/*fin1.clear();
 		fin1.seekg(idxtable[i].index[vecidx], ios::beg);
-		fin1.getline(str1, k);
+		fin1.getline(s, k);
 		for (j = 0; j < k; j++) {
-			if (str1[j] != ' ') {
-				if (str1[j] != idxtable[i].sh[j])break;
+			if (s[j] != ' ') {
+				if (s[j] != idxtable[i].sh[j])break;
 			}
 		}
 		if (j < k) {
@@ -129,10 +151,8 @@ void algorithm2::reconstruct() {
 		else {
 			fout << idxtable[i].sh;
 			vecidx = 0;
-		}
+		}*/
 	}
-
-	fin1.close();
 	fout.close();
 
 	time = (float)(clock() - start) / CLOCKS_PER_SEC;
@@ -140,21 +160,26 @@ void algorithm2::reconstruct() {
 }
 
 void algorithm2::compare() {
-	int correct=0;
+	int correct = 0, size = 0;
 	char c1, c2;
 	fin1.open(real);
 	fin2.open(mydna);
-
+	fin1.seekg(0, ios::end);
+	size = fin1.tellg();
+	fin1.clear();
+	fin1.seekg(0, ios::beg);
+	fin2.seekg(0, ios::beg);
 	do {
 		fin1.get(c1);
 		fin2.get(c2);
 		if (c1 == c2)correct++;
-	} while (!fin1.eof());
 
-	fin1.seekg(0, ios::beg);
-	accuracy = (correct / fin1.tellg()) * 100;
-	
-	cout << "°É¸° ½Ã°£: " << time<<endl;
-	cout << "Á¤È®µµ: " << accuracy << "%" << endl;
+	} while (!fin1.eof() || !fin2.eof());
+	accuracy = ((double)correct / (double)size) * 100;
 
+	cout << "ê±¸ë¦° ì‹œê°„: " << time << endl;
+	cout << "ì •í™•ë„: " << accuracy << "%" << endl;
+	cout << "ì¼ì¹˜í•œ ë¬¸ì ê°œìˆ˜: " << correct << ", ì „ì²´ dna ê¸¸ì´: " << size << endl;
+	fin1.close();
+	fin2.close();
 }

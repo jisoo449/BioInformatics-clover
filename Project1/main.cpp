@@ -14,9 +14,9 @@
 using namespace std;
 
 int main() {
-	int n=2000000000;//dna 길이
-	int l = 70;//shortread 길이
-	int m = 200000000;//shortread 개수
+	int n=5000000;//dna 길이
+	int l = 70	;//shortread 길이
+	int m = 500000;//shortread 개수
 	int d=4;//mismatch 개수
 	string shname = "shortread.txt", refname = "reference.txt", mydna="mydna.txt",realdna="real.txt";
 
@@ -24,27 +24,24 @@ int main() {
 	ref.generate();
 	shortread shortread(n, d,l,m,shname,refname,realdna);
 	shortread.makeShortread();
+	
 
 	//trivial
-	/*trivial tri(l,m,d,realdna,refname,shname,"trivial.txt");
+	trivial tri(l,m,d,realdna,refname,shname,"trivial.txt");
 	tri.reconstruct();
-	tri.compare();*/
+	tri.compare();
 
-	//de novo 방식 main
-	/*
+	//algorithm1
 	BSTree<string> bst;
 	ifstream fin;
 	fin.open("shortread.txt");
-	cout << "shortread 개수 ? ";
+	cout << "shortread 개수 ?";
 	int shortnum;
 	cin >> shortnum;
 	bool leftsuccess;
 	bool rightsuccess;
 	clock_t start, end;
 	double result;
-	cout << "일치할 최소 길이 ? "; //최소 매칭 개수 받기
-	int oknum;
-	cin >> oknum;
 
 	start = clock();
 	string *arr = new string[shortnum];
@@ -57,18 +54,16 @@ int main() {
 			i++;
 			continue;
 		}
-		bst.insert(arr[i], oknum);
+		bst.insert(arr[i]);
 		leftsuccess = bst.getleftsuccess();
 		rightsuccess = bst.getrightsuccess();
 		if (leftsuccess == true) {
 			cout << "왼쪽 삽입 성공" << endl;
-			arr[i] = "NULL";
 			i = 0;
 			continue;
 		}
 		else if (leftsuccess == false && rightsuccess == true) {
 			cout << "오른쪽 삽입 성공" << endl;
-			arr[i] = "NULL";
 			i = 0;
 			continue;
 		}
@@ -86,11 +81,12 @@ int main() {
 	result = (double)(end - start) / (CLOCKS_PER_SEC);
 	cout << "걸린 시간 : " << result << endl;
 	return 0;
-	*/
+	
 
 	//algoritm2
-	/*algorithm2 al2(l,m,d,realdna,refname,shname,"al2.txt");
+	cout << "al2" << endl;
+	algorithm2 al2(l,m,d,realdna,refname,shname,"al2.txt");
 	al2.reconstruct();
-	al2.compare();*/
+	al2.compare();
 	return 0;
 }

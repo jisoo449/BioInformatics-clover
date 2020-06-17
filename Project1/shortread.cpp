@@ -21,30 +21,38 @@ void shortread::makeShortread() {
 		if (rand() % 100 < x) {
 			switch (mismatch = rand() % 4) {
 			case 0:
-				fout << 'A';
+				c = 'A';
 				break;
 			case 1:
-				fout << 'T';
+				c = 'T';
 				break;
 			case 2:
-				fout << 'G';
+				c = 'G';
 				break;
 			case 3:
-				fout << 'C';
+
+				c= 'C';
 				break;
 			}
 		}
+		fout << c;
 	} while (!fin.eof());
 	fin.close(); fout.close();
 	
-	char *str = new char[k];
+	char str;
+	int j = 0;
 	fin.open(real); fout.open(shortreadFn);
-	//n°³ÀÇ shortread »ý¼º
+	//nê°œì˜ shortread ìƒì„±
 	for (int i = 0; i < n; i++) {
-
 		fin.seekg(rand() % (length - k + 1), ios::beg);
-		fin.getline(str, k);
-		fout << str << endl;
+		do {
+			fin.get(c);
+			fout << c;
+			j++;
+			if (j > k)break;
+		} while (!fin.eof());
+		fout << endl;
+		j = 0;
 	}
 	fin.close();fout.close();
 }

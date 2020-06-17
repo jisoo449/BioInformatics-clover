@@ -34,7 +34,6 @@ void BSTree<T>::insertSub(Node<T> *&p, const string &newElement, int oknum) {
 	else if (p->left == nullptr) { //왼쪽 자식 비어있을때
 		string temp = p->data;
 		int newLen = newElement.length(); //쇼트리드 길이
-//		int endP = newLen / 3;
 		bool insertEnd = false;
 		for (int i = 0; i < newLen-oknum-1; i++) { //newElement 비교 시작 인덱스
 			for (int j = 0; j < newLen; j++) {
@@ -45,8 +44,6 @@ void BSTree<T>::insertSub(Node<T> *&p, const string &newElement, int oknum) {
 				}
 				if (temp[j] != newElement[i + j])
 					break;
-//				else if (temp[j] == newElement[i + j])
-//					continue;
 			}
 			if (insertEnd) {//삽입 완료
 				leftsuccess = true;
@@ -68,7 +65,6 @@ void BSTree<T>::insertrightSub(Node<T> *&p, const string &newElement, int oknum)
 	else if (p->right == nullptr) {
 		string temp = p->data;
 		int tempLen = temp.length();
-//		int startP = tempLen / 3;
 		bool insertEnd = false;
 		for (int i = 0; i < tempLen-oknum-1; i++) { //p비교 시작 인덱스
 			for (int j = 0; j < newElement.length(); j++) { //새 원소 비교 시작 인덱스

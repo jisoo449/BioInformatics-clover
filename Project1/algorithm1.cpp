@@ -1,4 +1,4 @@
-#include"algorithm1.h"
+#include"algorithm2.h"
 template<typename T>
 BSTree<T>::BSTree() {
 	root = nullptr;
@@ -17,26 +17,26 @@ bool BSTree<T>::empty() {
 }
 
 template<typename T>
-void BSTree<T>::insert(const string &newElement) {
-	return insertSub(root, newElement);
+void BSTree<T>::insert(const string &newElement, int oknum) {
+	return insertSub(root, newElement, oknum);
 }
 
 template<typename T>
-void BSTree<T>::insertSub(Node<T> *&p, const string &newElement) {
+void BSTree<T>::insertSub(Node<T> *&p, const string &newElement, int oknum) {
 	if (p == nullptr) { //첫 입력일때
 		p = new Node<string>(newElement, 0);
 		leftsuccess = true;
 	}
 
 	if (p->left != nullptr) //왼쪽 자식이 비어있지 않으면 계속 넘어가기;
-		insertSub(p->left, newElement);
+		insertSub(p->left, newElement, oknum);
 
 	else if (p->left == nullptr) { //왼쪽 자식 비어있을때
 		string temp = p->data;
 		int newLen = newElement.length(); //쇼트리드 길이
-		int endP = newLen / 3;
+//		int endP = newLen / 3;
 		bool insertEnd = false;
-		for (int i = 0; i < endP; i++) { //newElement 비교 시작 인덱스
+		for (int i = 0; i < newLen-oknum-1; i++) { //newElement 비교 시작 인덱스
 			for (int j = 0; j < newLen; j++) {
 				if (i + j == newElement.length()) {
 					p->left = new Node<string>(newElement, i); //0부터 i-1번째까지 앞에 추가됨
@@ -54,23 +54,23 @@ void BSTree<T>::insertSub(Node<T> *&p, const string &newElement) {
 			}
 			else if (!insertEnd) {
 				leftsuccess = false;
-				insertrightSub(root, newElement); //오른쪽 비교
+				insertrightSub(root, newElement, oknum); //오른쪽 비교
 			}
 		}
 	}
 }
 
 template<typename T>
-void BSTree<T>::insertrightSub(Node<T> *&p, const string &newElement) {
+void BSTree<T>::insertrightSub(Node<T> *&p, const string &newElement, int oknum) {
 	if (p->right != nullptr) { //오른쪽이 비어있을 때까지 넘기기
-		insertrightSub(p->right, newElement);
+		insertrightSub(p->right, newElement, oknum);
 	}
 	else if (p->right == nullptr) {
 		string temp = p->data;
 		int tempLen = temp.length();
-		int startP = tempLen / 3;
+//		int startP = tempLen / 3;
 		bool insertEnd = false;
-		for (int i = 0; i < startP; i++) { //p비교 시작 인덱스
+		for (int i = 0; i < tempLen-oknum-1; i++) { //p비교 시작 인덱스
 			for (int j = 0; j < newElement.length(); j++) { //새 원소 비교 시작 인덱스
 				if (i + j == newElement.length()) {
 					p->right = new Node<string>(newElement, j); //j부터 newElement 길이까지 뒤에 추가됨;

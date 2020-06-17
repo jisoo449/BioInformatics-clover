@@ -9,7 +9,7 @@ struct sh {
 class algorithm2 {
 	ofstream fout;//fout:mydna
 	ifstream fin1, fin2;//fin1:shortread, fin2: reference 
-	int n, k, d; //n:shortread°³¼ö, k:shortread±æÀÌ, d:Çã¿ëÇÏ´Â mismatch °³¼ö
+	int n, k, d; //n:shortreadê°œìˆ˜, k:shortreadê¸¸ì´, d:í—ˆìš©í•˜ëŠ” mismatch ê°œìˆ˜
 	string shortread, mydna, reference,real;
 	int x = 2;
 	sh* idxtable;
@@ -22,7 +22,7 @@ public:
 	algorithm2( int k, int n, int d, string real="real.txt",string reference = "reference.txt", string shortread = "shortread.txt", string mydna = "mydna.txt");
 	void reconstruct();
 	void compare();
-	void computeSP(char* str, int* sp, int size);
+	void computeSP(string str, int* sp, int size);
 	void KMP();
 };
 #endif

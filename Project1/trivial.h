@@ -13,6 +13,9 @@ class trivial {
 	double accuracy;
 	clock_t start;
 
+	char *refarr, *myarr, *realarr;
+	int size;
+
 public:
 	trivial(int k, int n, int d,string real="real.txt", string reference = "reference.txt", string shortread = "shortread.txt", string mydna = "mydna.txt");
 	void reconstruct();

@@ -12,68 +12,68 @@ trivial::trivial(int k, int n, int d, string real, string reference, string shor
 	this->k = k;
 	this->d = d;
 	this->real = real;
+
+	fin2.open(reference);
+	fin2.seekg(0, ios::end);
+	size = fin2.tellg();
+	refarr = new char[size + 1];
+	myarr = new char[size + 1];
+	realarr = new char[size + 1];
+	fin2.clear();
+	fin2.seekg(0, ios::beg);
+	char c;
+	int i = 0;
+	while (fin2.get(c)) {
+		refarr[i++] = c;
+	}
+	fin2.close();
 }
 
 void trivial::reconstruct() {
 	start = clock();
-
 	fout.open(mydna);
 	fin1.open(shortread);
-	fin2.open(reference);
 
 	string str1;
-	char *str2 = new char[k + 1];
 	char c;
-	int idx = 0, mismatch = 0, i = 0;
-	while (getline(fin1, str1)) {
-		do {
-			fin2.get(c);
-			if (str1[i] == c) i++;
-			else {
-				mismatch++;
-				i++;
+	int mismatch=0;
+	int i,j,tmpi;
+	while(getline(fin1,str1)) {
+
+		for (i = 0; i < size; i++) {
+			mismatch = 0;
+			for (j = 0; j < k; j++) {
+				if (str1[j] != refarr[i+j])mismatch++;
+				if (mismatch > d)break;
 			}
-			if (mismatch > d) {
-				mismatch = 0;
-				i = 0;
-				fin2.clear();
-				fin2.seekg(++idx, ios::beg);
+			if (j == k) {
+				for (j = 0; j < k; j++) {
+					myarr[i+j] = str1[j];
+				}
+				break;
 			}
-			if (i == k) break;
-		} while (!fin2.eof());
-		if (i == k) {
-			fout.clear();
-			fout.seekp(idx, ios::beg);
-			fout << str1;
 		}
-		i = 0;
-		idx = 0;
-		mismatch = 0;
+
 	}
 
+	fout.write(myarr, size);
 	fin1.close();
-	fin2.close();
 	fout.close();
 
 	time = (float)(clock() - start) / CLOCKS_PER_SEC;
 }
 
 void trivial::compare() {
-	int correct = 0, size = 0;
-	char c1, c2;
+	int correct = 0;
+	char c;
+	int i = 0;
 	fin1.open(real);
-	fin2.open(mydna);
-	fin1.seekg(0, ios::end);
-	size = fin1.tellg();
-	fin1.clear();
-	fin1.seekg(0, ios::beg);
-	fin2.seekg(0, ios::beg);
-	do {
-		fin1.get(c1);
-		fin2.get(c2);
-		if (c1 == c2)correct++;
-
-	} while (!fin1.eof() || !fin2.eof());
+	while (fin1.get(c)) {
+		realarr[i++] = c;
+	}
+	for (int i = 0; i < size; i++) {
+		if (realarr[i] == myarr[i])correct++;
+	}
 	accuracy = ((double)correct / (double)size) * 100;
 
 	cout << "걸린 시간: " << time << endl;
